@@ -7,6 +7,10 @@ import (
 	"github.com/Renzi0n/metrics/internal/models"
 )
 
+var (
+	ErrorWrongMetricType = errors.New("WRONG METRIC TYPE")
+)
+
 type metrics struct {
 	Gauge   map[string]models.GaugeMetricValue
 	Counter map[string]models.CounterMetricValue
@@ -40,7 +44,7 @@ func (m *MetricsStorage) UpdateMetrics(Type models.MetricType, Name string, Valu
 		}
 		m.Metrics.Counter[Name] += models.CounterMetricValue(val)
 	default:
-		return errors.New("WRONG METRIC TYPE")
+		return ErrorWrongMetricType
 	}
 
 	return nil
